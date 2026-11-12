@@ -1,0 +1,7 @@
+# CoreStory
+
+CoreStory turns complex codebases into structured, explainable context for engineering teams.
+
+Installable skills: https://github.com/CoreStoryAI/agent-skills
+
+Public releases: https://github.com/CoreStoryAI/corestory
