@@ -4,4 +4,4 @@ CoreStory turns complex codebases into structured, explainable context for engin
 
 Installable skills: https://github.com/CoreStoryAI/agent-skills
 
-Public releases: https://github.com/CoreStoryAI/corestory
+Release repository: https://github.com/CoreStory-Frontier/dist
