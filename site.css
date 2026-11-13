@@ -123,6 +123,17 @@ a:hover {
   text-decoration: none;
 }
 
+.header-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.header-links .quiet-link + .quiet-link {
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--dark-gray);
+}
+
 .hero {
   padding: 88px 0 80px;
 }
@@ -359,6 +370,13 @@ code {
   color: var(--ink);
   font-family: var(--font-mono);
   font-size: 0.9em;
+}
+
+pre {
+  max-width: 100%;
+  margin: 0;
+  overflow-x: auto;
+  white-space: pre;
 }
 
 footer {

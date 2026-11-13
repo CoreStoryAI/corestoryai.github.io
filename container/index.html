@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-expression="control-room" data-audience="builder">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Build and evaluate the local Plot container preview.">
+    <meta name="theme-color" content="#000000">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="CoreStory">
+    <meta property="og:title" content="Plot container preview | CoreStory">
+    <meta property="og:description" content="Ingest one mounted repository and serve the Plot Explorer and MCP from one local container.">
+    <meta property="og:url" content="https://get.corestory.ai/container/">
+    <link rel="canonical" href="https://get.corestory.ai/container/">
+    <link rel="icon" href="../assets/brand/design-system/assets/Logos/CoreStory-Symbol-Rev-Gold-RGB.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../assets/brand/dist/tokens.css">
+    <link rel="stylesheet" href="../site.css">
+    <title>Plot container preview | CoreStory</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="../" aria-label="CoreStory Get home">
+          <img src="../assets/brand/design-system/assets/Logos/CoreStory-Logo-Rev-Gold-RGB.svg" alt="CoreStory" width="180" height="43">
+        </a>
+        <span class="section-label">GET / CONTAINER</span>
+        <a class="quiet-link" href="https://github.com/CoreStory-Frontier/plot-container-poc">Source</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="wrap hero-grid">
+          <div>
+            <div class="dynamic-bar" aria-hidden="true"></div>
+            <p class="eyebrow">UNSUPPORTED PUBLIC PREVIEW</p>
+            <h1 id="hero-title">Plot container<br><span>one repo, locally.</span></h1>
+            <p class="lede">Mount a Git repository read-only, persist the corpus, and serve the Plot Explorer, API, and streamable HTTP MCP from one container.</p>
+            <div class="actions">
+              <a class="button primary" href="https://github.com/CoreStory-Frontier/plot-container-poc">View source</a>
+              <a class="button quiet" href="#build">Build locally</a>
+            </div>
+          </div>
+          <aside class="signal-panel" aria-label="Container preview status">
+            <p class="panel-label">PREVIEW STATUS</p>
+            <p class="panel-status"><span class="status-mark" aria-hidden="true"></span> SOURCE AVAILABLE</p>
+            <dl>
+              <div><dt>Explorer</dt><dd>/app</dd></div>
+              <div><dt>MCP</dt><dd>/mcp</dd></div>
+              <div><dt>Trust boundary</dt><dd>Loopback only</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="build" aria-labelledby="build-title">
+        <div class="wrap">
+          <div class="section-heading">
+            <div>
+              <div class="dynamic-bar" aria-hidden="true"></div>
+              <p class="eyebrow">BUILD FROM SOURCE</p>
+              <h2 id="build-title">Public source, gated image.</h2>
+            </div>
+            <p>No public image has been released yet. Clone the appliance beside an authorized Plot checkout and build the preview locally.</p>
+          </div>
+          <div class="catalog-grid">
+            <article class="catalog-card">
+              <p class="panel-label">BUILD</p>
+              <h3>Create the image</h3>
+              <pre><code>docker build \
+  --build-context plot=../plot \
+  -t plot-container-poc:local \
+  .</code></pre>
+            </article>
+            <article class="catalog-card">
+              <p class="panel-label">RUN</p>
+              <h3>Keep it local</h3>
+              <pre><code>docker volume create plot-container-data
+docker run --rm \
+  -p 127.0.0.1:8080:8080 \
+  -v /path/to/repo:/workspace:ro \
+  -v plot-container-data:/data \
+  plot-container-poc:local</code></pre>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="use-title">
+        <div class="wrap release-grid">
+          <div>
+            <div class="dynamic-bar" aria-hidden="true"></div>
+            <p class="eyebrow">USE</p>
+            <h2 id="use-title">Explorer and MCP arrive together.</h2>
+          </div>
+          <div class="release-copy">
+            <p>Explorer: <a href="http://127.0.0.1:8080/app"><code>http://127.0.0.1:8080/app</code></a></p>
+            <p>MCP: <code>http://127.0.0.1:8080/mcp</code></p>
+            <p>Health: <code>http://127.0.0.1:8080/ping</code></p>
+            <p>Configuration may be mounted at <code>/config/config.toml</code>. <code>CS_</code> environment variables retain normal precedence.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section release-section" aria-labelledby="release-title">
+        <div class="wrap release-grid">
+          <div>
+            <div class="dynamic-bar" aria-hidden="true"></div>
+            <p class="eyebrow">RELEASE BOUNDARY</p>
+            <h2 id="release-title">Do not expose this preview.</h2>
+          </div>
+          <div class="release-copy">
+            <p>The appliance has no authentication and is intended for a single local corpus. Bind it to loopback, use a separate state volume for each repository, and do not expose it to a LAN or the internet.</p>
+            <p>The reserved canonical image location is <code>ghcr.io/corestory-frontier/plot-container</code>. Publication remains blocked on redistribution approval, multi-architecture verification, SBOM, provenance, scanning, signing, and exact-digest runtime tests.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap footer-inner">
+        <span>CoreStory · Plot container preview</span>
+        <span><a href="../">get.corestory.ai</a> · <a href="https://github.com/CoreStory-Frontier/plot-container-poc">Source</a></span>
+      </div>
+    </footer>
+  </body>
+</html>

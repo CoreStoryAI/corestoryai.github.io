@@ -23,7 +23,10 @@
           <img src="assets/brand/design-system/assets/Logos/CoreStory-Logo-Rev-Gold-RGB.svg" alt="CoreStory" width="180" height="43">
         </a>
         <span class="section-label">GET</span>
-        <a class="quiet-link" href="#skills">Agent Skills</a>
+        <nav class="header-links" aria-label="Distribution">
+          <a class="quiet-link" href="#skills">Agent Skills</a>
+          <a class="quiet-link" href="container/">Container preview</a>
+        </nav>
       </div>
     </header>
 
@@ -84,6 +87,21 @@
               <p>Install and contribute through the public repository.</p>
               <a class="text-link" href="https://github.com/CoreStoryAI/agent-skills">View repository <span aria-hidden="true">→</span></a>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="container" aria-labelledby="container-title">
+        <div class="wrap release-grid">
+          <div>
+            <div class="dynamic-bar" aria-hidden="true"></div>
+            <p class="eyebrow">LOCAL APPLIANCE</p>
+            <h2 id="container-title">Bring one repository into focus.</h2>
+          </div>
+          <div class="release-copy">
+            <p>The Plot container preview ingests a read-only mounted Git repository, persists its corpus, and serves the Explorer and MCP from one local container.</p>
+            <p>The source is public for evaluation. A signed public OCI image is not available yet.</p>
+            <a class="button quiet" href="container/">Read the preview guide</a>
           </div>
         </div>
       </section>
