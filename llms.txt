@@ -5,3 +5,7 @@ CoreStory turns complex codebases into structured, explainable context for engin
 Installable skills: https://github.com/CoreStoryAI/agent-skills
 
 Release repository: https://github.com/CoreStory-Frontier/dist
+
+Plot container preview: https://get.corestory.ai/container/
+
+Plot container source: https://github.com/CoreStory-Frontier/plot-container-poc
