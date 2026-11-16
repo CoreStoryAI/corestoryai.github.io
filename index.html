@@ -49,11 +49,11 @@
       <div class="dl" id="dl-buttons">
         <!-- Hrefs start at the latest-release page and are replaced with direct
              file links by the script at the bottom of the page. -->
-        <a class="btn btn-mint" id="dl-mac" data-download-os="mac" data-download-kind="desktop" href="https://github.com/CoreStory-Frontier/release-dist/releases/latest">
+        <a class="btn btn-mint" id="dl-mac" data-download-os="mac" data-download-kind="desktop" href="https://github.com/CoreStory-Frontier/release-dist/releases">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16"/></svg>
           <span>Download for macOS <small>Apple silicon</small></span>
         </a>
-        <a class="btn btn-outline-dark" id="dl-linux" data-download-os="linux" data-download-kind="desktop" href="https://github.com/CoreStory-Frontier/release-dist/releases/latest">
+        <a class="btn btn-outline-dark" id="dl-linux" data-download-os="linux" data-download-kind="desktop" href="https://github.com/CoreStory-Frontier/release-dist/releases">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16"/></svg>
           <span>Download for Linux <small>.deb</small></span>
         </a>
@@ -62,14 +62,14 @@
              When the desktop app ships for Windows: change the label to "Download for Windows",
              set data-download-kind="desktop", remove #dl-windows-note, and set
              ASSETS.windows in the script below to the installer's file pattern. -->
-        <a class="btn btn-outline-dark" id="dl-windows" data-download-os="windows" data-download-kind="cli" href="https://github.com/CoreStory-Frontier/release-dist/releases/latest">
+        <a class="btn btn-outline-dark" id="dl-windows" data-download-os="windows" data-download-kind="cli" href="https://github.com/CoreStory-Frontier/release-dist/releases">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16"/></svg>
           <span>Windows: command-line tool</span>
         </a>
         <!-- ==== END WINDOWS TREATMENT ==== -->
       </div>
       <p class="dl-alt" id="dl-windows-note">Desktop app for Windows coming soon.</p>
-      <p class="dl-alt">Linux AppImage and the command-line tool for every platform are on the <a id="dl-all" data-download-os="all" href="https://github.com/CoreStory-Frontier/release-dist/releases/latest">latest release page</a>.</p>
+      <p class="dl-alt">Linux AppImage and the command-line tool for every platform are on the <a id="dl-all" data-download-os="all" href="https://github.com/CoreStory-Frontier/release-dist/releases">latest release page</a>.</p>
       <p class="dl-note">Download for free with your own model key, point it at a repo, and connect your coding agent.</p>
       <p class="dl-version" id="dl-version" hidden></p>
     </div>
@@ -162,7 +162,7 @@
       <div class="res-card"><h3>Install and add your model key</h3><p>Step-by-step install, plus which model providers are supported and where the key is stored.</p><a class="more" href="#install">Install steps ↓</a></div>
       <div class="res-card"><h3>Connect your coding agent</h3><p>Setup for Claude Code, Codex, GitHub Copilot and Cursor.</p><a class="more" href="#connect">Connect your agent ↓</a></div>
       <div class="res-card"><h3>Agent Skills</h3><p>26 ready-made skills that teach your agent how to use CoreStory, for both hosted and local setups.</p><a class="more" href="https://github.com/CoreStoryAI/agent-skills">View the skills on GitHub</a></div>
-      <div class="res-card"><h3>Release notes and checksums</h3><p>What changed in each version, plus checksums to verify your download.</p><a class="more" id="release-notes-link" href="https://github.com/CoreStory-Frontier/release-dist/releases/latest">Latest release</a></div>
+      <div class="res-card"><h3>Release notes and checksums</h3><p>What changed in each version, plus checksums to verify your download.</p><a class="more" id="release-notes-link" href="https://github.com/CoreStory-Frontier/release-dist/releases">Latest release</a></div>
       <div class="res-card"><h3>Guides</h3><p>Documentation and getting-started guides for CoreStory.</p><a class="more" href="https://docs.corestory.ai">Read the docs</a></div>
     </div>
 
@@ -190,7 +190,7 @@
         </ol>
         <p class="guide-note">You only see the terms and model steps the first time. After that, the app opens straight to the folder picker.</p>
         <h4>Command-line tool</h4>
-        <p>Download the command-line tool for your platform from the <a class="release-link" href="https://github.com/CoreStory-Frontier/release-dist/releases/latest">latest release</a>, put <code>corestory</code> on your <code>PATH</code>, then from your repository run:</p>
+        <p>Download the command-line tool for your platform from the <a class="release-link" href="https://github.com/CoreStory-Frontier/release-dist/releases">latest release</a>, put <code>corestory</code> on your <code>PATH</code>, then from your repository run:</p>
 <pre><code>corestory --version
 cd your-repo
 corestory init
@@ -284,7 +284,7 @@ var ASSETS = {
 };
 
 function releasePage(repo) {
-  return "https://github.com/" + repo + "/releases/latest";
+  return "https://github.com/" + repo + "/releases";
 }
 
 // Pure: given a release object from the GitHub API (or null on failure),
@@ -302,6 +302,12 @@ function resolveDownloads(release, repo) {
     if (release.html_url) out.notes = release.html_url;
   }
   return out;
+}
+
+// Newest published release (pre-releases allowed, drafts skipped), or null.
+function pickRelease(list) {
+  if (!Array.isArray(list)) return null;
+  return list.filter(function (r) { return r && !r.draft; })[0] || null;
 }
 
 function detectOS(nav) {
@@ -362,10 +368,13 @@ if (typeof document !== "undefined") {
     });
 
     apply(resolveDownloads(null, RELEASE_REPO));
-    fetch("https://api.github.com/repos/" + RELEASE_REPO + "/releases/latest", {
+    // List releases rather than /releases: "latest" skips pre-releases,
+    // and an early-access release may be published as one.
+    fetch("https://api.github.com/repos/" + RELEASE_REPO + "/releases?per_page=10", {
       headers: { Accept: "application/vnd.github+json" }
     })
       .then(function (res) { return res.ok ? res.json() : null; })
+      .then(pickRelease)
       .catch(function () { return null; })
       .then(function (release) { apply(resolveDownloads(release, RELEASE_REPO)); });
   })();

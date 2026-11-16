@@ -5,7 +5,7 @@ CoreStory maps how a codebase actually works, from applications and processes do
 Download (desktop app for macOS on Apple silicon and Linux x64; command-line tool for macOS, Linux and Windows): https://get.corestory.ai/
 Setup guide: https://get.corestory.ai/#setup
 Connect a coding agent: https://get.corestory.ai/#connect
-Latest release: https://github.com/CoreStory-Frontier/release-dist/releases/latest
+Latest release: https://github.com/CoreStory-Frontier/release-dist/releases
 
 Agent Skills catalog (machine-readable): https://get.corestory.ai/.well-known/agent-skills/index.json
 Installable skills: https://github.com/CoreStoryAI/agent-skills
