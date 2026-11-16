@@ -202,3 +202,5 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .footer-links a:hover{border-color:#fff}
 footer .agents-row{font-size:12.5px}
 
+
+.btn.is-pending{opacity:.55;cursor:not-allowed}

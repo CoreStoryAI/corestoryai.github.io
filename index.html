@@ -376,7 +376,24 @@ if (typeof document !== "undefined") {
       .then(function (res) { return res.ok ? res.json() : null; })
       .then(pickRelease)
       .catch(function () { return null; })
-      .then(function (release) { apply(resolveDownloads(release, RELEASE_REPO)); });
+      .then(function (release) {
+        var r = resolveDownloads(release, RELEASE_REPO);
+        apply(r);
+        // Holding state: until a public release resolves, say so instead of
+        // letting visitors click through to a GitHub 404. Clears itself once
+        // RELEASE_REPO is public and has a published release.
+        if (!r.version) {
+          var v = document.getElementById("dl-version");
+          v.textContent = "Downloads are being published now. Check back shortly.";
+          v.hidden = false;
+          Object.keys(buttons).forEach(function (k) {
+            var el = document.getElementById(buttons[k]);
+            el.setAttribute("aria-disabled", "true");
+            el.classList.add("is-pending");
+            el.addEventListener("click", function (e) { if (el.classList.contains("is-pending")) e.preventDefault(); });
+          });
+        }
+      });
   })();
 }
 </script>
