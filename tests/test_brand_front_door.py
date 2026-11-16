@@ -46,8 +46,14 @@ for number in ["40&ndash;74%", "98%", "17&ndash;35%"]:
 for anchor in ["requirements", "install", "connect"]:
     require(f'id="{anchor}"')
     require(f'href="#{anchor}"')
-require("claude plugin install corestory-local@corestory")
-require('"args": ["mcp", "--path", "/absolute/path/to/repo", "--no-watch"]')
+# Agent setup verified against the corestory CLI (v0.1.0-rc1 / main 2026-11-16):
+# `corestory mcp` serves the directory it starts in and has no --path/--no-watch.
+require('"args": ["mcp"]')
+require('cwd = "/absolute/path/to/your-repo"')
+require("${workspaceFolder}")
+require("corestory setup")
+for dead in ("--path", "--no-watch", "corestory refine", "store.db"):
+    assert dead not in PAGE, f"stale CLI instruction on page: {dead}"
 assert "create your account" not in PAGE, "no account is created on first run"
 assert "hosted models" not in PAGE, "no hosted models are offered"
 

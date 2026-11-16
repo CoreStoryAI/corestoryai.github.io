@@ -190,51 +190,51 @@
         </ol>
         <p class="guide-note">You only see the terms and model steps the first time. After that, the app opens straight to the folder picker.</p>
         <h4>Command-line tool</h4>
-        <p>Download the command-line tool for your platform from the <a class="release-link" href="https://github.com/CoreStory-Frontier/release-dist/releases">latest release</a>, put <code>corestory</code> on your <code>PATH</code>, then from your repository run:</p>
+        <p>Download the command-line tool for your platform from the <a class="release-link" href="https://github.com/CoreStory-Frontier/release-dist/releases">latest release</a> and put <code>corestory</code> on your <code>PATH</code>. Run setup once to accept the terms and add your model key, then index a repository:</p>
 <pre><code>corestory --version
+corestory setup
 cd your-repo
 corestory init
-corestory ingest
-corestory refine</code></pre>
-        <p class="guide-note">This creates <code>.corestory/store.db</code> inside the repository and adds it to <code>.gitignore</code>.</p>
+corestory ingest</code></pre>
+        <p class="guide-note">CoreStory keeps its index in a <code>.corestory</code> folder inside the repository. Add <code>.corestory/</code> to your <code>.gitignore</code>.</p>
       </article>
 
       <article class="guide-item" id="connect" aria-labelledby="connect-title">
         <h3 id="connect-title">Connect your coding agent</h3>
-        <p>Your agent talks to CoreStory through the <code>corestory</code> command-line tool, which serves the repository's map over MCP. Install the command-line tool first (see above) and make sure <code>corestory</code> is on your <code>PATH</code>.</p>
-
-        <h4>Claude Code</h4>
-        <p>Install the local CoreStory plugin. It needs no account and makes no network calls.</p>
-<pre><code>claude plugin marketplace add corestoryai/agent-skills
-claude plugin install corestory-local@corestory</code></pre>
-        <p class="guide-note">The plugin runs <code>corestory mcp --path &lt;workspace&gt; --no-watch</code> for the folder you have open, and adds the CoreStory skills.</p>
-
-        <h4>GitHub Copilot, VS Code and Cursor</h4>
-        <p>Add a <code>.mcp.json</code> file at the root of your repository:</p>
-        <!-- TODO(eng): confirm each client reads a root .mcp.json (VS Code also reads .vscode/mcp.json with a "servers" key; Cursor reads .cursor/mcp.json). -->
+        <p>Your agent talks to CoreStory through the <code>corestory</code> command-line tool, which serves the repository&rsquo;s map over MCP. Install the command-line tool and run <code>corestory setup</code> first (see above). CoreStory serves the repository it is started in, so each setup below starts it from your repository folder.</p>
+        <h4>Claude Code, GitHub Copilot (VS Code and CLI)</h4>
+        <p>Add a <code>.mcp.json</code> file at the root of your repository. Commit it to share the setup with your team.</p>
 <pre><code>{
   "mcpServers": {
     "corestory": {
       "type": "stdio",
       "command": "corestory",
-      "args": ["mcp", "--path", "/absolute/path/to/repo", "--no-watch"]
+      "args": ["mcp"]
     }
   }
 }</code></pre>
-
+        <p class="guide-note">Open the repository folder in your agent. Claude Code asks you to approve the server the first time, and Copilot CLI asks you to trust the folder.</p>
+        <h4>Cursor</h4>
+        <p>Add <code>.cursor/mcp.json</code> to your repository. Cursor has no working-directory setting, so this starts CoreStory from the project folder (macOS and Linux):</p>
+<pre><code>{
+  "mcpServers": {
+    "corestory": {
+      "type": "stdio",
+      "command": "sh",
+      "args": ["-c", "cd \"$0\" &amp;&amp; exec corestory mcp", "${workspaceFolder}"]
+    }
+  }
+}</code></pre>
         <h4>Codex</h4>
-        <p>Add the server to your Codex configuration (<code>~/.codex/config.toml</code>):</p>
-        <!-- TODO(eng): verify this Codex stdio block against the current Codex CLI before launch. -->
+        <p>Add the server to <code>~/.codex/config.toml</code>, with <code>cwd</code> set to your repository:</p>
 <pre><code>[mcp_servers.corestory]
 command = "corestory"
-args = ["mcp", "--path", "/absolute/path/to/repo", "--no-watch"]</code></pre>
-        <p>Add the CoreStory skills with the GitHub CLI:</p>
+args = ["mcp"]
+cwd = "/absolute/path/to/your-repo"</code></pre>
+        <h4>Agent Skills</h4>
+        <p>Teach your agent CoreStory&rsquo;s workflows with the <a href="https://github.com/CoreStoryAI/agent-skills">Agent Skills</a>. For Codex, install them with the GitHub CLI:</p>
 <pre><code>gh skill install corestoryai/agent-skills --all --agent codex --scope user</code></pre>
-
-        <h4>Gemini CLI</h4>
-<pre><code>gemini extensions install https://github.com/corestoryai/agent-skills</code></pre>
-
-        <p class="guide-note">Using hosted CoreStory with your organization? Follow the <a href="https://github.com/CoreStoryAI/agent-skills#install">Agent Skills install guide</a> with your organization's MCP URL.</p>
+        <p class="guide-note">Using hosted CoreStory with your organization? Follow the <a href="https://github.com/CoreStoryAI/agent-skills#install">Agent Skills install guide</a> with your organization&rsquo;s MCP URL.</p>
       </article>
     </div>
   </div>
@@ -280,7 +280,7 @@ var ASSETS = {
   // Windows: command-line tool until the desktop app ships (see WINDOWS TREATMENT above).
   windows: /^corestory-cli-.+-x86_64-pc-windows-gnu\.tar\.gz$/,
   cliMac: /^corestory-cli-.+-aarch64-apple-darwin\.tar\.gz$/,
-  cliLinux: /^corestory-cli-.+-x86_64-unknown-linux-gnu\.tar\.gz$/
+  cliLinux: /^corestory-cli-.+-x86_64-unknown-linux-(musl|gnu)\.tar\.gz$/
 };
 
 function releasePage(repo) {
