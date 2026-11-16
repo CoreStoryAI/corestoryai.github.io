@@ -99,3 +99,6 @@ require('<meta name="twitter:card" content="summary_large_image">')
 require('"@type": "SoftwareApplication"')
 assert (ROOT / "assets/social/og-get-corestory.png").exists(), "OG image file missing"
 assert (ROOT / "apple-touch-icon.png").exists(), "apple-touch-icon missing"
+
+# Claude Code plugin (agent-skills#5 fixed its MCP args; verified install from GitHub 2026-11-16).
+require("claude plugin install corestory-local@corestory")

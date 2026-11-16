@@ -229,8 +229,12 @@ corestory ingest</code></pre>
       <article class="guide-item" id="connect" aria-labelledby="connect-title">
         <h3 id="connect-title">Connect your coding agent</h3>
         <p>Your agent talks to CoreStory through the <code>corestory</code> command-line tool, which serves the repository&rsquo;s map over MCP. Install the command-line tool and run <code>corestory setup</code> first (see above). CoreStory serves the repository it is started in, so each setup below starts it from your repository folder.</p>
-        <h4>Claude Code, GitHub Copilot (VS Code and CLI)</h4>
-        <p>Add a <code>.mcp.json</code> file at the root of your repository. Commit it to share the setup with your team.</p>
+        <h4>Claude Code</h4>
+        <p>Install the local CoreStory plugin. It connects CoreStory to the repository you open and adds the CoreStory skills. It needs no account and makes no network calls.</p>
+<pre><code>claude plugin marketplace add corestoryai/agent-skills
+claude plugin install corestory-local@corestory</code></pre>
+        <h4>GitHub Copilot (VS Code and CLI)</h4>
+        <p>Add a <code>.mcp.json</code> file at the root of your repository. Commit it to share the setup with your team. Claude Code reads this file too, if you would rather not use the plugin.</p>
 <pre><code>{
   "mcpServers": {
     "corestory": {
@@ -240,7 +244,7 @@ corestory ingest</code></pre>
     }
   }
 }</code></pre>
-        <p class="guide-note">Open the repository folder in your agent. Claude Code asks you to approve the server the first time, and Copilot CLI asks you to trust the folder.</p>
+        <p class="guide-note">Open the repository folder in your agent. Copilot CLI asks you to trust the folder, and Claude Code asks you to approve the server the first time.</p>
         <h4>Cursor</h4>
         <p>Add <code>.cursor/mcp.json</code> to your repository. Cursor has no working-directory setting, so this starts CoreStory from the project folder (macOS and Linux):</p>
 <pre><code>{
