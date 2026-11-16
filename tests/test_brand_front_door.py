@@ -92,3 +92,10 @@ for value in [
 ]:
     assert value in CONTAINER_PAGE, f"missing container preview content: {value}"
 assert "docker pull ghcr.io" not in CONTAINER_PAGE, "unreleased image is pullable"
+
+# Social/SEO metadata: absolute OG image that exists in the repo, large Twitter card, JSON-LD.
+require('<meta property="og:image" content="https://get.corestory.ai/assets/social/og-get-corestory.png">')
+require('<meta name="twitter:card" content="summary_large_image">')
+require('"@type": "SoftwareApplication"')
+assert (ROOT / "assets/social/og-get-corestory.png").exists(), "OG image file missing"
+assert (ROOT / "apple-touch-icon.png").exists(), "apple-touch-icon missing"
