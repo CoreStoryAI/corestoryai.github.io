@@ -94,11 +94,20 @@ for value in [
 assert "docker pull ghcr.io" not in CONTAINER_PAGE, "unreleased image is pullable"
 
 # Social/SEO metadata: absolute OG image that exists in the repo, large Twitter card, JSON-LD.
-require('<meta property="og:image" content="https://get.corestory.ai/assets/social/og-get-corestory.png">')
+require('<meta property="og:image" content="https://get.corestory.ai/assets/social/og-get-corestory-v2.png">')
 require('<meta name="twitter:card" content="summary_large_image">')
 require('"@type": "SoftwareApplication"')
-assert (ROOT / "assets/social/og-get-corestory.png").exists(), "OG image file missing"
+assert (ROOT / "assets/social/og-get-corestory-v2.png").exists(), "OG image file missing"
 assert (ROOT / "apple-touch-icon.png").exists(), "apple-touch-icon missing"
 
 # Claude Code plugin (agent-skills#5 fixed its MCP args; verified install from GitHub 2026-11-16).
 require("claude plugin install corestory-local@corestory")
+
+# Agent install path: hero prompt, agent instructions, and the honest setup caveat.
+require("Install CoreStory from get.corestory.ai")
+require("You accept the terms and add your model key")
+LLMS = (ROOT / "llms.txt").read_text()
+for value in ("corestory setup", "Do not accept the terms on the user's behalf", "x86_64-unknown-linux-musl", '"args":["mcp"]'):
+    assert value in LLMS, f"llms.txt missing: {value}"
+for dead in ("--path", "--no-watch"):
+    assert dead not in LLMS, f"llms.txt has stale flag {dead}"

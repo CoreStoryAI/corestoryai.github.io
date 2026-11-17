@@ -204,3 +204,9 @@ footer .agents-row{font-size:12.5px}
 
 
 .btn.is-pending{opacity:.55;cursor:not-allowed}
+
+.agent-ask{margin-top:18px;padding:14px 16px;background:var(--gray);border-left:4px solid var(--gold);border-radius:4px}
+.agent-ask-label{margin:0 0 6px;font-size:13px;font-weight:500;color:#000}
+.agent-ask-prompt{margin:0}
+.agent-ask-prompt code{font-size:14.5px;white-space:normal;color:#000;background:none;padding:0}
+.agent-ask-note{margin:8px 0 0;font-size:12.5px;color:var(--text2)}
