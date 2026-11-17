@@ -203,13 +203,13 @@
       <article class="guide-item" id="requirements" aria-labelledby="req-title">
         <h3 id="req-title">System requirements</h3>
         <ul>
-          <li><strong>macOS:</strong> Mac with Apple silicon. Desktop app.</li>
-          <li><strong>Linux:</strong> x64, as a <code>.deb</code> package or an AppImage. The desktop app needs WebKitGTK.</li>
-          <li><strong>Windows:</strong> x64, command-line tool only for now. The desktop app for Windows is coming soon.</li>
+          <li><strong>macOS:</strong> macOS 12 Monterey or later on a Mac with Apple silicon. Desktop app and command-line tool.</li>
+          <li><strong>Linux:</strong> x64, as a <code>.deb</code> package or an AppImage, plus the command-line tool. The desktop app needs WebKitGTK 4.1 (for example, Ubuntu 22.04 or later).</li>
+          <li><strong>Windows:</strong> Windows 10 or later, x64. Command-line tool only for now; the desktop app for Windows is coming soon.</li>
           <li><strong>A model provider key</strong> from OpenAI, Azure OpenAI or Anthropic.</li>
           <li><strong>A repository</strong> on your machine to point CoreStory at.</li>
         </ul>
-        <!-- TODO(eng): add minimum OS versions, memory and disk space once engineering confirms them. Do not guess. -->
+        <!-- Minimums verified 2026-11-17 against release 2026.11.17: macOS LSMinimumSystemVersion 12.0; .deb Depends libwebkit2gtk-4.1-0, libgtk-3-0 (installed and launched on Ubuntu 24.04); Windows exe imports ProcessPrng (bcryptprimitives.dll, Windows 10+). TODO(eng): memory and disk space. -->
       </article>
 
       <article class="guide-item" id="install" aria-labelledby="install-title">
