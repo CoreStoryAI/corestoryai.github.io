@@ -14,21 +14,22 @@
   <meta property="og:title" content="Download CoreStory | Give your teams and agents the whole story">
   <meta property="og:description" content="Download CoreStory free with your own model key, point it at a repo, and connect your coding agent.">
   <meta property="og:url" content="https://get.corestory.ai/">
-  <meta property="og:image" content="https://get.corestory.ai/assets/social/og-get-corestory.png">
+  <meta property="og:image" content="https://get.corestory.ai/assets/social/og-get-corestory-v2.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="CoreStory: Give your teams and agents the whole story. Free download at get.corestory.ai.">
+  <meta property="og:image:alt" content="CoreStory: Give your teams and agents the whole story. Free download, or tell your agent: Install CoreStory from get.corestory.ai.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Download CoreStory | Give your teams and agents the whole story">
   <meta name="twitter:description" content="Download CoreStory free with your own model key, point it at a repo, and connect your coding agent.">
-  <meta name="twitter:image" content="https://get.corestory.ai/assets/social/og-get-corestory.png">
-  <meta name="twitter:image:alt" content="CoreStory: Give your teams and agents the whole story. Free download at get.corestory.ai.">
+  <meta name="twitter:image" content="https://get.corestory.ai/assets/social/og-get-corestory-v2.png">
+  <meta name="twitter:image:alt" content="CoreStory: Give your teams and agents the whole story. Free download, or tell your agent: Install CoreStory from get.corestory.ai.">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://get.corestory.ai/">
   <link rel="icon" href="assets/brand/design-system/assets/Logos/CoreStory-Symbol-Rev-Gold-RGB.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="alternate" type="text/plain" title="CoreStory install instructions for coding agents" href="https://get.corestory.ai/llms.txt">
   <link rel="alternate" type="application/json" title="CoreStory Agent Skills catalog" href="https://get.corestory.ai/.well-known/agent-skills/index.json">
   <link rel="stylesheet" href="get.css">
   <script type="application/ld+json">
@@ -40,7 +41,7 @@
     "description": "CoreStory maps how a codebase actually works, from applications and processes down to business rules, each traced to the code behind it, and serves that map to coding agents over MCP.",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "macOS, Linux, Windows (command-line tool)",
-    "image": "https://get.corestory.ai/assets/social/og-get-corestory.png",
+    "image": "https://get.corestory.ai/assets/social/og-get-corestory-v2.png",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
     "publisher": { "@type": "Organization", "name": "CoreStory", "url": "https://corestory.ai/" }
   }
@@ -98,6 +99,11 @@
       <p class="dl-alt" id="dl-windows-note">Desktop app for Windows coming soon.</p>
       <p class="dl-alt">Linux AppImage and the command-line tool for every platform are on the <a id="dl-all" data-download-os="all" href="https://github.com/CoreStory-Frontier/release-dist/releases">latest release page</a>.</p>
       <p class="dl-note">Download for free with your own model key, point it at a repo, and connect your coding agent.</p>
+      <div class="agent-ask">
+        <p class="agent-ask-label">Or tell your coding agent:</p>
+        <p class="agent-ask-prompt"><code>Install CoreStory from get.corestory.ai and set it up for this repository.</code></p>
+        <p class="agent-ask-note">Your agent installs the command-line tool and connects itself. You accept the terms and add your model key when it asks you to run <code>corestory setup</code>.</p>
+      </div>
       <p class="dl-version" id="dl-version" hidden></p>
     </div>
   </div>
@@ -217,6 +223,7 @@
         </ol>
         <p class="guide-note">You only see the terms and model steps the first time. After that, the app opens straight to the folder picker.</p>
         <h4>Command-line tool</h4>
+        <p class="guide-note">Coding agents: follow the step-by-step install instructions at <a href="/llms.txt">get.corestory.ai/llms.txt</a>.</p>
         <p>Download the command-line tool for your platform from the <a class="release-link" href="https://github.com/CoreStory-Frontier/release-dist/releases">latest release</a> and put <code>corestory</code> on your <code>PATH</code>. Run setup once to accept the terms and add your model key, then index a repository:</p>
 <pre><code>corestory --version
 corestory setup

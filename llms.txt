@@ -2,16 +2,30 @@
 
 CoreStory maps how a codebase actually works, from applications and processes down to business rules, each traced to the code behind it, and serves that map to coding agents over MCP.
 
-Download (desktop app for macOS on Apple silicon and Linux x64; command-line tool for macOS, Linux and Windows): https://get.corestory.ai/
-Setup guide: https://get.corestory.ai/#setup
+## Install CoreStory (instructions for coding agents)
+
+Follow these steps when a user asks you to install or set up CoreStory.
+
+1. Find the latest release. Call `https://api.github.com/repos/CoreStory-Frontier/release-dist/releases?per_page=10` and take the first entry where `draft` is false. Human release page: https://github.com/CoreStory-Frontier/release-dist/releases
+2. Download the command-line tool for this machine from that release's assets, plus the matching `.sha256` file:
+   - macOS (Apple silicon): `corestory-cli-<version>-aarch64-apple-darwin.tar.gz`
+   - Linux (x64): `corestory-cli-<version>-x86_64-unknown-linux-musl.tar.gz`
+   - Windows (x64): `corestory-cli-<version>-x86_64-pc-windows-gnu.tar.gz`
+   Other platforms are not supported yet. Do not download `.app.tar.gz` (updater bundle) or `.sig` files.
+3. Verify the download: compute the archive's SHA-256 and compare it with the first field of the `.sha256` file (that file names a build path, so `shasum -c` may not find the archive). Extract the archive and put `bin/corestory` on the user's PATH (for example `~/.local/bin`). Check with `corestory --version`.
+4. Ask the user to run `corestory setup` in their own terminal. It is interactive: the user accepts the Terms of Use (https://app.corestory.ai/terms) and Privacy Policy (https://app.corestory.ai/privacy), chooses telemetry, and adds a model key (OpenAI, Azure OpenAI or Anthropic). Do not accept the terms on the user's behalf. Other commands refuse to run until setup is done.
+5. Connect yourself. `corestory mcp` is a stdio MCP server for the repository it is started in. It takes no path argument, so start it from the repository folder:
+   - Claude Code: `claude plugin marketplace add corestoryai/agent-skills` then `claude plugin install corestory-local@corestory`
+   - GitHub Copilot (VS Code and CLI) or Claude Code without the plugin: `.mcp.json` at the repository root: {"mcpServers":{"corestory":{"type":"stdio","command":"corestory","args":["mcp"]}}}
+   - Cursor: `.cursor/mcp.json`: {"mcpServers":{"corestory":{"type":"stdio","command":"sh","args":["-c","cd \"$0\" && exec corestory mcp","${workspaceFolder}"]}}}
+   - Codex: in `~/.codex/config.toml`: [mcp_servers.corestory] command = "corestory", args = ["mcp"], cwd = "<absolute path to the repository>"
+6. Index the repository after setup: run `corestory init` and `corestory ingest` from the repository folder, or call the server's `init` and `ingest` tools. Add `.corestory/` to `.gitignore`.
+7. Teach yourself CoreStory's workflows with the Agent Skills: https://github.com/CoreStoryAI/agent-skills (machine-readable catalog: https://get.corestory.ai/.well-known/agent-skills/index.json)
+
+## Links
+
+Download page and setup guide: https://get.corestory.ai/
 Connect a coding agent: https://get.corestory.ai/#connect
-Latest release: https://github.com/CoreStory-Frontier/release-dist/releases
-
-Agent Skills catalog (machine-readable): https://get.corestory.ai/.well-known/agent-skills/index.json
-Installable skills: https://github.com/CoreStoryAI/agent-skills
-
 Plot container preview: https://get.corestory.ai/container/
-Plot container source: https://github.com/CoreStory-Frontier/plot-container-poc
-
 Benchmarks: https://corestory.ai/research/v3-benchmarks
 Documentation: https://docs.corestory.ai
