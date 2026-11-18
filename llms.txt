@@ -26,6 +26,5 @@ Follow these steps when a user asks you to install or set up CoreStory.
 
 Download page and setup guide: https://get.corestory.ai/
 Connect a coding agent: https://get.corestory.ai/#connect
-CoreStory container preview: https://get.corestory.ai/container/
 Benchmarks: https://corestory.ai/research/v3-benchmarks
 Documentation: https://docs.corestory.ai

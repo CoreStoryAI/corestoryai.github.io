@@ -19,7 +19,6 @@ require('<link rel="canonical" href="https://get.corestory.ai/">')
 require('assets/brand/design-system/assets/Logos/CoreStory-Logo-Rev-Gold-RGB.svg')
 require('https://get.corestory.ai/.well-known/agent-skills/index.json')
 require('https://github.com/CoreStoryAI/agent-skills')
-require('href="container/"')
 require("GTM-MVPGQKQ2")
 require("googletagmanager.com/ns.html?id=GTM-MVPGQKQ2")
 
@@ -83,15 +82,14 @@ require(":focus-visible", CSS)
 for img in re.findall(r"<img [^>]*>", PAGE):
     assert 'alt="' in img, f"image without alt text: {img}"
 
-# The container preview page is unchanged and still honest about its status
+# The container preview is not public: no links point to it, and its URL is a noindex placeholder
+assert 'href="container/"' not in PAGE, "front door links to the unpublished container page"
+assert "container/" not in (ROOT / "llms.txt").read_text(), "llms.txt points to the container page"
+assert "container/" not in (ROOT / "sitemap.xml").read_text(), "sitemap lists the container page"
 CONTAINER_PAGE = (ROOT / "container" / "index.html").read_text()
-for value in [
-    "CoreStory container preview",
-    "https://github.com/CoreStory-Frontier/plot-container-poc",
-    "No public image has been released yet.",
-]:
-    assert value in CONTAINER_PAGE, f"missing container preview content: {value}"
-assert "docker pull ghcr.io" not in CONTAINER_PAGE, "unreleased image is pullable"
+require('<meta name="robots" content="noindex">', CONTAINER_PAGE)
+for leaked in ["CoreStory-Frontier", "ghcr.io", "docker build", "plot-container"]:
+    assert leaked not in CONTAINER_PAGE, f"container placeholder exposes internal detail: {leaked}"
 
 # Social/SEO metadata: absolute OG image that exists in the repo, large Twitter card, JSON-LD.
 require('<meta property="og:image" content="https://get.corestory.ai/assets/social/og-get-corestory-v2.png">')
