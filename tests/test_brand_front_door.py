@@ -86,7 +86,7 @@ for img in re.findall(r"<img [^>]*>", PAGE):
 # The container preview page is unchanged and still honest about its status
 CONTAINER_PAGE = (ROOT / "container" / "index.html").read_text()
 for value in [
-    "Plot container preview",
+    "CoreStory container preview",
     "https://github.com/CoreStory-Frontier/plot-container-poc",
     "No public image has been released yet.",
 ]:
