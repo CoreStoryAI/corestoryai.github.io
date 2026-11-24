@@ -109,3 +109,12 @@ for value in ("corestory setup", "Do not accept the terms on the user's behalf",
     assert value in LLMS, f"llms.txt missing: {value}"
 for dead in ("--path", "--no-watch"):
     assert dead not in LLMS, f"llms.txt has stale flag {dead}"
+
+# One-line install for the command-line tool, on the page and for agents
+require("curl -fsSL https://get.corestory.ai/install.sh | sh")
+require("irm https://get.corestory.ai/install.ps1 | iex")
+LLMS = (ROOT / "llms.txt").read_text()
+require("curl -fsSL https://get.corestory.ai/install.sh | sh", LLMS)
+require("irm https://get.corestory.ai/install.ps1 | iex", LLMS)
+assert (ROOT / "install.sh").read_text().startswith("#!/bin/sh"), "install.sh must be POSIX sh"
+assert "Do not accept" not in (ROOT / "install.sh").read_text()
