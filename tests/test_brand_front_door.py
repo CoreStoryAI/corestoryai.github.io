@@ -109,3 +109,9 @@ for value in ("corestory setup", "Do not accept the terms on the user's behalf",
     assert value in LLMS, f"llms.txt missing: {value}"
 for dead in ("--path", "--no-watch"):
     assert dead not in LLMS, f"llms.txt has stale flag {dead}"
+
+# Download clicks also go to CoreStory's PostHog (anonymous, no cookies), so clicks
+# by people can be told apart from GitHub's raw download count.
+require('event: "get/download-clicked"')
+require('"https://telemetry.corestory.ai/i/v0/e/"')
+require("$process_person_profile = false")
