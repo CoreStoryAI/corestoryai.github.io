@@ -224,7 +224,13 @@
         <p class="guide-note">You only see the terms and model steps the first time. After that, the app opens straight to the folder picker.</p>
         <h4>Command-line tool</h4>
         <p class="guide-note">Coding agents: follow the step-by-step install instructions at <a href="/llms.txt">get.corestory.ai/llms.txt</a>.</p>
-        <p>Download the command-line tool for your platform from the <a class="release-link" href="https://github.com/CoreStory-Frontier/release-dist/releases">latest release</a> and put <code>corestory</code> on your <code>PATH</code>. Run setup once to accept the terms and add your model key, then index a repository:</p>
+        <p>Install it with one command. The script downloads the latest release, checks its checksum and puts <code>corestory</code> on your <code>PATH</code>.</p>
+        <p class="guide-note">macOS (Apple silicon) and Linux (x64):</p>
+<pre><code>curl -fsSL https://get.corestory.ai/install.sh | sh</code></pre>
+        <p class="guide-note">Windows (x64), in PowerShell:</p>
+<pre><code>irm https://get.corestory.ai/install.ps1 | iex</code></pre>
+        <p class="guide-note">Prefer to do it by hand? Download the archive for your platform from the <a class="release-link" href="https://github.com/CoreStory-Frontier/release-dist/releases">latest release</a> and put <code>corestory</code> on your <code>PATH</code>.</p>
+        <p>Run setup once to accept the terms and add your model key, then index a repository:</p>
 <pre><code>corestory --version
 corestory setup
 cd your-repo

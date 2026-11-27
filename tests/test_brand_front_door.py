@@ -110,8 +110,11 @@ for value in ("corestory setup", "Do not accept the terms on the user's behalf",
 for dead in ("--path", "--no-watch"):
     assert dead not in LLMS, f"llms.txt has stale flag {dead}"
 
-# Download clicks also go to CoreStory's PostHog (anonymous, no cookies), so clicks
-# by people can be told apart from GitHub's raw download count.
-require('event: "get/download-clicked"')
-require('"https://telemetry.corestory.ai/i/v0/e/"')
-require("$process_person_profile = false")
+# One-line install for the command-line tool, on the page and for agents
+require("curl -fsSL https://get.corestory.ai/install.sh | sh")
+require("irm https://get.corestory.ai/install.ps1 | iex")
+LLMS = (ROOT / "llms.txt").read_text()
+require("curl -fsSL https://get.corestory.ai/install.sh | sh", LLMS)
+require("irm https://get.corestory.ai/install.ps1 | iex", LLMS)
+assert (ROOT / "install.sh").read_text().startswith("#!/bin/sh"), "install.sh must be POSIX sh"
+assert "Do not accept" not in (ROOT / "install.sh").read_text()
